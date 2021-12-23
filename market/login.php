@@ -86,7 +86,11 @@
                        }
 
                       if(response.indexOf('success')>=0){  
-                          
+                          //i want to get the user Regid
+                          //which will determing if am to load
+                          // price.php (when Regi is nothing) 
+                          //or
+                          //load dashboard.php (when Regid has a value)
                         } 
                         },
                         dataType:'text'
