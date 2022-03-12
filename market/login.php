@@ -1,11 +1,14 @@
 <?php
  
   session_start();
- 
-  function load_page(){
-    echo $_SESSION["Regid"];
+  if(isset($_SESSION["LoggedIn"])){
+      $user_type=$_SESSION["UserType"];
+      if($user_type==0){
+          header("Location:./price.php");
+      }else if($user_type>0){
+          header("Location:./dashboard.php");
+      }
   }
-  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,47 +61,50 @@
                     </form> 
                 </section>
             </section>
-        </section>
-    </div>
-    <script type="text/javascript">  
-        //validate form data
-        $(document).ready(function(){
+        </section> 
+    </div> 
+    <script type="text/javascript">   
+        $(document).ready(function(){  
+            var error=""; 
+            $("#InputEmail").on('keydown',function(){ 
+                $("#login-error").html(error);
+            });
+            $("#InputPassword").on('keydown',function(){ 
+                $("#login-error").html(error);
+            });
             $("#login").on('click',function(){
                 var email=$("#InputEmail").val();
                 var password=$("#InputPassword").val();
-                var error=""; 
+                let regex = new RegExp('[a-z0-9]+@[a-z]+[.]+[a-z]{2,3}');
                 if(email=="" || email==null){
                     error="Enter email address";
+                }else if(!regex.test(email)){
+                    error="Invalid email format";
                 }else if(password=="" || password ==null){
                     error="Enter password";
                 }
 
                 if(error !=""){
                     $("#login-error").html(error);
-                }else{
-                    $("#login-error").html(error);
-
-                    $.ajax({url:'../functions/Helper.php',method:'POST',data:{login:1,email:email,password:password },
-
-                        success:function(response){
-                            if(response.indexOf('success')<0){
-                        $("#login-error").html(response) ; 
-                       }
-
-                      if(response.indexOf('success')>=0){  
-                          //i want to get the user Regid
-                          //which will determing if am to load
-                          // price.php (when Regi is nothing) 
-                          //or
-                          //load dashboard.php (when Regid has a value)
-                        } 
+                    error="";
+                }else{ 
+                    $.ajax({url:'../functions/Helper.php',
+                        method:'POST',
+                        data:{login:1,email:email,password:password }, 
+                        success:function(response){  
+                             if(response.Regid==0){  
+                                 window.location="./price.php";
+                             }else if(response.Regid>0){
+                                 window.location="./dashboard.php"; 
+                             }else{
+                                $("#login-error").html(response.Error); 
+                             }  
                         },
-                        dataType:'text'
+                        dataType:'json'
                     });
-                }
-
-               
+                } 
             });
+ 
         });
     </script>
     <script src="../js/bootstrap.min.js"></script>

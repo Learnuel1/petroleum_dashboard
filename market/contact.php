@@ -78,6 +78,26 @@
                     </section>
               </div>
           </div>
+          <!-- Button trigger modal -->
+  <button type="button" id="message_model" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Successful</h5> 
+        </div>
+        <div class="modal-body">
+          Message sent successfully.
+        </div>
+        <div class="modal-footer"> 
+          <button type="button" id="btn_message_model" class="btn btn-primary">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div> 
         </section> 
           <section class="footer-section">
           <footer class="footer">
@@ -99,6 +119,8 @@
 
   <script>
     $(document).ready(function(){
+      var message= document.querySelector("#message_model");
+            message.style.display='none';
       $("#submit_contact").on('click',function(){
         var fullname=$("#fullname").val();
         var email=$("#email").val();
@@ -132,14 +154,16 @@
                      $("#registration-error").html(response) ;
                       }
                   if(response.indexOf('success')>=0){
-                      alert("Message sent successfully");
-                    window.location="../index.php";
+                    $("#message_model").trigger('click'); 
                   }
                 },
                 dataType:'text'
             });
         }
       });
+      $("#btn_message_model").on('click',function () {
+        window.location="../index.php";
+        });
     });
   </script>
       <script src="../js/bootstrap.min.js"></script>

@@ -4,6 +4,7 @@ session_start();
 include_once("../Config/Database.php");
 include_once("../Config/Accessdata.php");
 include_once("./Userlogin.php");
+include_once("./Product.php");
  
 $db= new Database();
    
@@ -58,16 +59,17 @@ if(isset($_POST["login"])){
    $user = new Userlogin();
    $data=[];
    $data= $user->login($email,$password,$db->conn);
-   if($data=="0"){
-      echo('incorrect email or password');
+   if($data=="0"){  
+      echo (json_encode(array("Error"=>"incorrect email or password")));
    }else{ 
       
       if($data["Regid"]=="" || $data["Regid"]==null){
           $data["Regid"]="0";
-       }
-      // $_SESSION["Regid"]=$data["Regid"];
-      // $_SESSION["Email"]=$data["Email"]; 
-      exit($data['Regid']);
+       } 
+       $_SESSION["LoggedIn"]=1;
+       $_SESSION["Email"]=$data["Email"];
+       $_SESSION["UserType"]=$data["Regid"];
+      echo (json_encode($data));
       
    }
 }
@@ -90,14 +92,11 @@ if(isset($_POST["forget_password"])){
    $email=$db->conn->real_escape_string( $_POST["email"]);
    $user = new Userlogin();
    $data =$user->find_user($email,$db->conn);
-   if($data=="0"){
-      exit('Email was not found');
+   if($data=="0"){ 
+      echo json_encode(array("Error"=>"Email was not found"));
    }else{ 
-      $_SESSION["UserId"]=$data["UserID"];
-      $_SESSION["Email"]=$email;
-      $_SESSION["Regid"]=$data["Regid"];
-      $_SESSION["LoggedIn"]="1";
-      exit('success');
+       
+      echo json_encode($data);
    }
 
 }
@@ -116,5 +115,39 @@ if(isset($_POST["reset_password"])){
    }
 }
 
+//add products 
+if(isset($_POST["add_product"])){
+   $name=$db->conn->real_escape_string( $_POST["product"]);
+   $symbol=$db->conn->real_escape_string( $_POST["symbol"]);
+   $status=$db->conn->real_escape_string( $_POST["status"]); 
+   $price=$db->conn->real_escape_string( $_POST["price"]);  
+   $usertype=$db->conn->real_escape_string( $_POST["usertype"]);
+
+   $product = new Product();
+   if($product->product_exist($name,$usertype,$db->conn)){
+      echo json_encode(array("Error"=>"Product already exists"));
+   }else if($product->symbol_exist($symbol,$usertype,$db->conn)){
+      echo json_encode(array("Error"=>"Symbol exists for a product"));
+   }else{
+      //store product
+      $product->save($name,$symbol,$status,$price,$usertype,$db->conn); 
+      if($product->Error_log==null){
+         echo json_encode(array("Success"=>"success"));
+      }else{ 
+         echo json_encode(array("Error"=>$product->Error_log));
+      }
+   }
+}
+if(isset($_POST["load_product"])){
+   $usertype=$db->conn->real_escape_string( $_POST["userid"]);
+   
+   $product = new Product(); 
+  $data= $product->get_product($usertype,$db->conn);
+   if($product->Error_log==null){ 
+         echo json_encode($data); 
+   }else{ 
+      echo json_encode(array("Error"=>$product->Error_log));
+   }
+}
 ?>
  

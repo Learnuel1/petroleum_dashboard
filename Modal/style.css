@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Ubuntu", sans-serif;
+}
+
+section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h2 {
+  color: #2f2f2f;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.open-modal {
+  color: #2f2f2f;
+  border: 2px solid #2f2f2f;
+  border-radius: 5px;
+  margin-top: 2.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.3rem;
+  background: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.modal {
+  width: 350px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2.4rem 2rem 2rem;
+  background: #fff;
+  box-shadow: 0 0 0 100vw rgba(0, 0, 0, 0.2);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  padding-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: #2f2f2f;
+}
+
+input {
+  margin-bottom: 1rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 1.3rem;
+  color: #2f2f2f;
+}
+
+form button {
+  border: none;
+  margin-top: 0.8rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.3rem;
+  background: #2f2f2f;
+  color: white;
+  cursor: pointer;
+}
+
+.close-modal {
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  cursor: pointer;
+}

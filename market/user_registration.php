@@ -59,17 +59,42 @@ session_start();
             </section>
         </section>
     </section>
+    
+  <!-- Button trigger modal -->
+  <button type="button" id="message_model" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Registration successful</h5> 
+        </div>
+        <div class="modal-body">
+          Registration completed successfully<br>Please login.
+        </div>
+        <div class="modal-footer"> 
+          <button type="button" id="btn_message_model" class="btn btn-primary">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div> 
     <script type="text/javascript"> 
         $(document).ready(function(){
-           $("#user_register").on('click',function(){
+            var message= document.querySelector("#message_model");
+            message.style.display='none';
+            var error="";
+           $("#user_register").on('click',function(){ 
                 var email=$("#InputEmail").val();
                 var password=$("#InputPassword").val();
                 var con_password=$("#InputPassword2").val();
-                var error="";
-
+                let regex = new RegExp('[a-z0-9]+@[a-z]+[.]+[a-z]{2,3}');//validate email
                 if(email =="" || email==null){
                     error="Email is required";
-                }else if(password =="" || password==null){
+                }else if(!regex.test(email)){
+                        error="invalid email format";
+                } else if(password =="" || password==null){
                     error="Password is required";
                 } else if(password.length<2){
                     error="Password is too short";
@@ -77,11 +102,12 @@ session_start();
                     error="Confirm password"
                 }else if(password !=con_password){
                     error="Password mismatch";
-                }
-
+                } 
 
                 if(error !=""){
                     $("#login-error").html(error) ; 
+                    error="";
+                    error="";
                 }else{
                     //connect to php
                     $.ajax({
@@ -97,15 +123,29 @@ session_start();
                                   $("#login-error").html(response) ;
                                 }
                                   if(response.indexOf('success')>=0){
-                                      alert("Registration successful");
-                                    window.location="login.php";
+                                      $("#message_model").trigger('click'); 
                                   }
                             },
                             dataType: 'text'
                     });
                 }
            }) ;
-            
+           $("#InputEmail").on('keydown',function () { 
+                $("#login-error").html(error) ;
+                 
+             });
+             $("#InputPassword").on('keydown',function () { 
+                $("#login-error").html(error) ;
+                 
+             });
+             $("#InputPassword2").on('keydown',function () { 
+                $("#login-error").html(error) ;
+                 
+             });
+
+        $("#btn_message_model").on('click',function(){
+            window.location="login.php";
+        });
         });
     </script>
     <script src="../js/bootstrap.min.js"></script>

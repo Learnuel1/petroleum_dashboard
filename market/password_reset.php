@@ -56,15 +56,36 @@ session_start();
             </section>
         </section>
     </section>
-     
+     <!-- Button trigger modal -->
+  <button type="button" id="message_model" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Successful</h5> 
+        </div>
+        <div class="modal-body">
+        Password reset successful<br>Please login.
+        </div>
+        <div class="modal-footer"> 
+          <button type="button" id="btn_message_model" class="btn btn-primary">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div> 
     <script>
         $(document).ready(function(){
+            var message= document.querySelector("#message_model");
+            message.style.display='none';
+            var error="";
             $("#reset_password").on('click',function(){
                 var email= "<?php echo $_SESSION["Email"]  ?>";
                 var password=$("#InputPassword").val();
                 var con_password=$("#InputPassword2").val();
-                var error="";
-
+                 
                 if(email==""|| email==null){
                     error="Provide email address";
                 }else if(password=="" || password==null){
@@ -97,14 +118,17 @@ session_start();
 
                                 if(response.indexOf('success')>=0){
                                     "<?php session_destroy(); ?>";
-                                    alert("Password reset successful");
-                                    window.location="./login.php";
+                                  //  alert("Password reset successful");
+                                    $("#btn_message_model").trigger('click');
                                 }
                             },
                             dataType:'text'
                     });
                 }
             });
+            $("#btn_message_model").on('click',function () {
+                window.location="./login.php";
+        });
         });
     </script>
     <script src="../js/bootstrap.min.js"></script>

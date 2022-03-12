@@ -73,7 +73,7 @@ class Userlogin{
 
 //Find user details for password reset
 public function find_user($email,$conn){
-    $result=$conn->query("SELECT UserID, Email FROM users WHERE Email='$email'");
+    $result=$conn->query("SELECT UserID,Regid, Email FROM users WHERE Email='$email'");
         if($result->num_rows>0){
             return $row=$result->fetch_assoc();
         }else{

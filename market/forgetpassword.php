@@ -45,19 +45,49 @@ session_start();
             </section>
         </section>
     </section>
-     
+       
+  <!-- Button trigger modal -->
+  <button type="button" id="message_model" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Email sent successfully</h5> 
+        </div>
+        <div class="modal-body">
+          Please check email inbox to get new login details.
+        </div>
+        <div class="modal-footer"> 
+          <button type="button" id="btn_message_model" class="btn btn-primary">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+
     <script type="text/javascript">
         $(document).ready(function(){
+           var message= document.querySelector("#message_model");
+            message.style.display='none';
+            var error="";
+            $("#InputEmail").on('keydown',function(){
+                $("#login-error").html(error);
+             });
             $("#forget_password").on('click',function(){
                 var email=$("#InputEmail").val();
-                var error="";
-
+               
+                let regex = new RegExp('[a-z0-9]+@[a-z]+[.]+[a-z]{2,3}');//validate email
                 if(email==""|| email==null){
                     error="Provide email address";
+                }else if(!regex.test(email)){
+                    error="invalid email format";
                 }
 
                 if(error !=""){
                     $("#login-error").html(error);
+                    error="";
                 }else{
                     $.ajax({
                             url:'../functions/Helper.php',
@@ -67,32 +97,28 @@ session_start();
                                 email:email
                             },
 
-                            success:function(response){
-                                if(response.indexOf('success')<0){
-                                    $("#login-error").html(response);
-                                }
-
-                                if(response.indexOf('success')>=0){
-                                    // get user_type
-                                    var user_type="<?php 
-                                   if( isset($_SESSION["Regid"])){
-                                        echo $_SESSION["Regid"];
-                                    } 
-                                    ?>";
+                            success:function(response){ 
                                     //if ordinary user show reset password page
-                                    if(user_type=="" || user_type== null){
+                                    if(response.Regid=="" || response.Regid== null){
                                         //show reset password page
                                         window.location='./password_reset.php';
-                                    }else{
+                                    }else if(response.Regid>0){
                                         //else email the business user
-                                        alert("check email for login details");
-                                    } 
-                                }
+                                        //show model message
+                                        $("#message_model").trigger('click'); 
+                                        
+                                    }else{
+                                        $("#login-error").html(response.Error);
+                                    }
+                               
                             },
-                            dataType:'text'
+                            dataType:'json'
                     });
                 }
             });
+            $("#btn_message_model").on('click',function(){
+                window.location="../index.php";
+        });
         });
     </script>
     <script src="../js/bootstrap.min.js"></script>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modal</title>
+     
+    <link href="../css/market.css" rel="stylesheet" type="text/css" media="screen">
+    <link rel="stylesheet" href="./style.css" />
+     
+  </head>
+  <body>
+    <section>
+      <h2>
+        Want to help each other out ? <br />
+        Help us, help you
+      </h2>
+      <button class="open-modal">Sign Up</button>
+    </section>
+
+    <div class="modal">
+      <svg
+        class="close-modal"
+        width="20"
+        height="20"
+        viewBox="0 0 29 29"
+        fill="none"
+      >
+        <path
+          d="M3 3L26.5 26.5"
+          stroke="#333"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M26.5 3L3 26.5"
+          stroke="#333"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+      </svg>
+
+      <form>
+        <div class="form-group"> 
+          <h6 class="mb-2 text-muted">Create new product details</h6>
+                     <lable for="InputEmail">Product name</lable>
+                     <input type="text"class="form-control" id="ProductName" aria-describedby="ProductName" placeholder="Enter product name" name="product"> 
+                 </div>
+             <div class="form-group">
+                    <label for="Symbols">Select symbol</label>
+                    <select id="symbols" class="form-control">
+                        <option value="select">Select</option>
+                        <option value="AGO">AGO</option>
+                        <option value="DSK">DSK</option>
+                        <option value="Kero">Kero</option>
+                        <option  value="Oil">OIL</option>
+                    </select> 
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" value="1" id="avaliableCheck" checked>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Avaliable</label>
+                </div>
+                <div class="form-group"> 
+                     <lable for="InputPrice">Price</lable>
+                     <input type="text"class="form-control" id="Price" aria-describedby="price" placeholder="Enter product price" name="price">
+                     
+                 </div> 
+                <div class="form-group">
+                    <h6 class="form-group" id="details-error"><small></small></h6> 
+                </div>
+                <div class="form-group">
+                <button type="button" id="btn-save-product" class="btn btn-primary btn-block" name="save">Save</button>  
+                <button type="button" class="btn" id="btn-close-add"  data-bs-dismiss="modal" name="save">Close</button> 
+                </div> 
+      </form>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

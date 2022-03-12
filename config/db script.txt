@@ -1,0 +1,27 @@
+CREATE TABLE message(
+    MesID INT AUTO_INCREMENT NOT NULL,
+    Fullname varchar(50) NOT NULL,
+    Email varchar(255) NOT NULL,
+    Text varchar(255) NOT NULL,
+    CONSTRAINT PK_Message PRIMARY KEY(MesID)
+    );
+	
+	
+	
+	DELIMITER //
+CREATE PROCEDURE add_product(IN name varchar(30),IN regid int,IN symbol varchar(8),IN pstatus varchar(20),IN price decimal(7,2)
+    )
+BEGIN
+
+	INSERT INTO products(Regid,Name,Symbol,Status) VALUES(regid,name,symbol,pstatus);
+   INSERT INTO price(Proid,Cost) VALUES((SELECT Proid FROM products WHERE Regid=regid ORDER BY Proid DESC LIMIT 1),price);
+
+END //
+DELIMITER ;
+
+CREATE VIEW view_product
+AS
+SELECT p.Proid,Regid AS Userid,Name,Symbol,Cost,Status,DateAdded, Date AS Updated
+FROM products p 
+INNER JOIN price b ON p.Proid=b.Proid
+

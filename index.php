@@ -1,5 +1,11 @@
 <?php
-   
+session_start();
+   if(isset($_SESSION["LoggedIn"])){
+     unset($_SESSION["UserType"]);
+     unset($_SESSION["LoggedIn"]);
+     session_destroy();
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
