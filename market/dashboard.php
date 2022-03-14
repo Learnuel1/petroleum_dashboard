@@ -1,159 +1,105 @@
 <?php
+include_once("../functions/infor.php"); 
+include_once("../Config/connect.php"); 
 session_start();
 if(!isset($_SESSION["LoggedIn"])){
   header("Location:./login.php");
 }
-
-$message="";
+  
 ?>
+ 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>pupprice</title>
-    <link href="../css/bootstrap.min.css" rel="stylesheet" > 
-    <link href="../css/dashboard.css" rel="stylesheet" type="text/css" media="screen">
-    <script type="text/javascript" src="../js/jquery.js"></script>
-    <script src="https://kit.fontawesome.com/54be263888.js" crossorigin="anonymous"></script>
-</head>
+<?php include("./head.php")?> 
 <body>
-    <section class="nav"> 
+<section class="nav"> 
         <a class="logo-icon" href="../index.php"><img src="../icons/pumprice-icon-3.png"> </a> 
     <div class="log-infor"> 
     </div> 
     </section>
- 
-    <section class="main-content"> 
-        <div class="side-bar">
-            <div class="user-details">
-                <div class="text">
-                    <h4 class="text-heading"><strong>Email</strong> </h4>
-                    <h3 class="text-details"> 
-                      <?php echo $_SESSION["Email"]; ?></h4>
-                    <h4 class="text- heading"> <strong>Username</strong></h4>
-                </div> 
+
+    <div class="content-wrapper"> 
+    <?php include("./sidebar.php")?> 
+       
+        <div class="content main" id="content-main">
+        <?php include("./header.php")?>  
+           <div class="content-infor">
+                <div class="left">
+                    <div class="card table-infor">
+                        <div class="card-body">
+                        <p class="heading-text">
+                            Current price of products  
+                        </p>  
+            					<table class="table products table-hover">
+      							<thead class="table-dark">
+                              <tr> 
+                                <th scope="col">Product</th>
+                                <th scope="col">Symbol</th>
+                                <th scope="col">Price</th> 
+                                <th scope="col">Status</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                            </tr>
+      								</thead  >
+            					    	<tbody id="all-product"> 
+                           
+            						    </tbody>
+      						</table>
+                </div>
             </div>
-            <a class="logout-icon" href="../index.php">Logout </a>
-           
-            <div class="items">
-                <ul class="btn">
-                    <li class="btn-list active-btn" id="dashboard">
-                        <a class=" btn-list-item active-list" href="./dashboard.php" >Dashboard</a>
-                    </li> 
-                    <li class="btn-list"  >
-                        <a class="btn-list-item"  id="addProduct">New product</a>
-                    </li>
-                    <li class="btn-list" id="">
-                        <a class="btn-list-item" href="./#">Update price</a>
-                    </li>
-                    <li class="btn-list"id="">
-                        <a class="btn-list-item" href="./#">Market</a>
-                    </li>
-                    <li class="btn-list"id="">
-                        <a class="btn-list-item" href="./#">Profile</a>
-                    </li>
-                    <li class="btn-list"id="">
-                        <a class="btn-list-item" href="./#">Account</a>
-                    </li>
-                </ul>
-            </div>
-        </div> 
-        <div class="content">
-        <div class="notification">
-        <h6 class="notify-text" id="login-error"><small></small></h6>
+                </div>
+                
+                <div class="right">
+                <div class="card table-infor">
+                        <div class="card-body">
+                        <p class="heading-text">
+                              Price history  
+                            </p>  
+                        <table class="table products table-hover">
+                            <thead class="table-dark">
+                            <tr> 
+                                <th scope="col">Product</th>
+                                <th scope="col">Symbol</th>
+                                <th scope="col">Price</th> 
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                            </thead>
+                            <tbody id="all-time-price"> 
+                            <?php 
+                                $userid = $_SESSION["UserType"];
+                                $q1="SELECT * FROM view_product_price WHERE Regid=$userid " ;
+                                $q1 = $conn->query($q1);
+                                while($row = mysqli_fetch_assoc($q1)){
+                                  extract($row); 
+                                 ?> 
+                                 <tr> 
+                                 <td><?php echo $row["Name"]; ?></td>
+                                 <td><?php echo $row["Symbol"] ;?></td>
+                                 <td><?php echo $row["Cost"]; ?></td>
+                                 <td><?php echo $row["Date"]; ?></td>
+                                 <td><?php echo $row["Time"]; ?></td>
+                                </tr>
+                                <?php
+                                } 
+                                ?>  
+                          
+                           </tbody>
+                      </table>
+                </div>
+              </div>  
+               
+                </div>
+           </div>
         </div>
-        <div class="card">
-            <div class="card-body">
-               <p class="heading-text">
-                <strong>Current price of products</strong> 
-               </p>  
-               <table class="table">
-  <thead>
-    <tr> 
-      <th scope="col">Product</th>
-      <th scope="col">Symbol</th>
-      <th scope="col">Price</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-    <tr > 
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr> 
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-     
-  </tbody>
-</table>
-            </div>
-        </div>
-         
-        </div>
-        </div> 
-    </section>
-    
-  <!-- Button trigger modal -->
-  <button type="button" id="addProduct_model" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
-  </button>
   
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="staticBackdropLabel">Add Product</h4> 
-          <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-        <div class="form-group1"> 
-        <h5 class="mb-2 text-muted">Create new product details</h5>
-                         <lable for="InputEmail">Product name</lable>
-                         <input type="text"class="form-control" id="ProductName" aria-describedby="ProductName" placeholder="Enter product name" name="product"> 
-        </div>
-        <div class="form-group1"> 
-              <label for="Symbols">Select symbol</label>
-              <select id="symbols" class="form-control">
-                  <option value="select">Select</option>
-                  <option value="AGO">AGO</option>
-                  <option value="DSK">DSK</option>
-                  <option value="Kero">Kero</option>
-                  <option  value="Oil">OiL</option>
-              </select> 
-            </div>
-            <div class="form-group1"> 
-            <lable for="checkbox">Status </lable>
-          <input class="form-check-input" type="checkbox"  id="status" value="Avaliable" checked> 
-          <label class="form-check-label" for="flexSwitchCheckDefault">Avaliable</label>
-            </div>
-            <div class="form-group1"> 
-                  <lable for="InputPrice">Price</lable>
-                    <input type="number" class="form-control" id="Price" aria-describedby="price" placeholder="Enter product price" name="price">   
-            </div> 
-            <div class="form-group1">
-               <h6 class="form-group1" id="error"><small></small></h6> 
-              </div>
-              <div class="form-group1">
-              <button type="button" id="btn-save-product" class="btn btn-primary btn-block" name="save">Save</button>   
-              </div> 
-        </div>
-        
-      </div>
-      </div>
     </div>
-  </div> 
+    <?php include("./footer.php")?> 
+    
 
-
+<!--NOTIFICATION MODAL-->  
  <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" id="notification_model" data-bs-toggle="modal" data-bs-target="#notification_modal"></button>
+ <button type="button" class="btn btn-primary" id="notification_model" data-bs-toggle="modal" data-bs-target="#notification_modal"></button>
 
 <!-- Modal -->
 <div class="modal fade" id="notification_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -164,7 +110,7 @@ $message="";
         
       </div>
       <div class="modal-body">
-        <h5>Product added successfully</h5>
+        <h5><?php echo $NotificationHeading;  ?></h5>
       </div>
       <div class="modal-footer">
         <button type="button" id="btn-notification" class="btn btn-secondary custome" data-bs-dismiss="modal">Ok</button> 
@@ -172,175 +118,509 @@ $message="";
     </div>
   </div>
 </div>
- 
-     
-  <section class="footer-section">
-      <footer class="footer">
-            <div class="footer-content">
-              <p class="copyright">
-                copyright &copy;2021 final year project by 19h/0051/cs-
-                All Rights Reserved.
-              </p>
-              
-            </div>
-            <div class="social-link">
-              <a class="icons"  href="www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a> 
-                <a class="icons" href="www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a> 
-                <a class="icons"href="www.twitter.com" target="_blank"><i class="fab fa-twitter-square"></i></a> 
-              </div>
-        </footer>
-      </section>
-          
-          <script>
 
-                  window.onload=
-            
 
-            $(document).ready(function(){
-              var message= document.querySelector("#addProduct_model");
-              var notification= document.querySelector("#notification_model");
-              message.style.display='none';
-              notification.style.display='none'; 
-              var error="";
-              loadproduct();
-             var status=$("#status").val(); 
-             $("#status").on('change',function(){ 
-                if($(this).prop('checked')){
-                  status=$("#status").val(); 
-                }else{
-                  status="Not";
-                } 
-             });
-              $("#addProduct").on('click',function(){ 
-                $("#addProduct_model").trigger('click');
-              });
- 
-
-              $("#btn-save-product").on('click',function(){ 
-                var product=$("#ProductName").val(); 
-                var symbol=$("#symbols").val(); 
-                var price=$("#Price").val(); 
-                var usertype ="<?php echo $_SESSION["UserType"]; ?>";
-
-                 if(product =="" || product==null){
-                   error="Provide product name";
-                 }else if(symbol=="select"){
-                   error="Select product symbol";
-                 }else if(price=="" ||price==null){
-                   error="Provide product price";
-                 }else if(price<=0){
-                   error="invalid price";
-                 }else if(Number.isNaN(price)){
-                    error="Invalid character";
-                 } else{
-                  const input = $('#Price')[0]
-                      var dotPos = null;
-                      input.oninput = function(e) {
-                      if (e.data === '.') {
-                        dotPos = input.value.length
-                      }
-                      }
-                      
-                      var value = input.value
-                      if (value.includes('.')) {
-                        dotPos = value.indexOf('.')
-                      } else if (!value.includes('.') && dotPos === null) {
-                        input.value += '.00'
-                      }
-                      if (dotPos !== null) {
-                        var sliced = value.slice(dotPos + 1)
-                        if (sliced.length > 2) {//round up to 2dp
-                        input.value = Number(value).toFixed(2)
-                        } else if (sliced.length === 1) {
-                        input.value += '0'
-                        } else if (sliced.length === 0) {
-                        input.value += '.00'
-                        }
-                      }
-                    
-                 }
+<!--ADD NEW PRODUCT MODAL -->
+  <!-- Button trigger modal -->
+  <button type="button" id="btn_addProduct_modal" data-bs-toggle="modal" data-bs-target="#addProduct_modal"> 
+  </button>
   
-                if(error!=""){
-                  $("#error").html(error);
-                  error="";
-                }else{
-                    $.ajax({
-                        url:'../functions/Helper.php',
-                        method:'POST',
-                        data:{
-                          add_product:1,
-                          product:product,
-                          symbol:symbol,
-                          status:status,
-                          price:price,
-                          usertype:usertype 
-                        },
-                        success:function(response){
-                            if(response.Success){ 
-                              $("#notification_model").trigger('click');
-                            } else if (response.Error) {
-                              $("#error").html(response.Error);
-                            }
-                        },
-                        dataType:'json'
-                     });
-
-                }
-              });
-              $("#ProductName").on('keydown',function(){ 
-                erro="";
-                $("#error").html(error);
-              });
-              $("#symbols").on('click',function(){ 
-                erro="";
-                $("#error").html(error);
-              });
-              $("#Price").on('click',function(){ 
-                erro="";
-                $("#error").html(error);
-              });
-              $("#btn-close").on('click',function(){ 
-                erro="";
-                $("#error").html(error);
-              });
-              //clear input fields
-              $("#btn-notification").on('click',function(){
-                 $("#ProductName").value=""; 
-                 $("#symbols").value="select"; 
-                 $("#Price").value=""; 
-                 loadproduct();
-              });
-
-              //load products
-              function loadproduct() {
-              var userid="<?php echo $_SESSION["UserType"];  ?>";
+  <!-- Modal -->
+  <div class="modal fade" id="addProduct_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="staticBackdropLabel">Add Product</h4> 
+          <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <div class="form-group1"> 
+        <h5 class="mb-2 text-muted">Create new product details</h5>
+                         <label for="InputEmail">Product name</label>
+                         <input type="text"class="form-control" id="ProductName" aria-describedby="ProductName" placeholder="Enter product name" name="product"> 
+        </div>
+        <div class="form-group1"> 
+              <label for="Symbols">Select symbol</label>
+              <select id="pro_symbols" class="form-control">
                 
-                $.ajax({ //from this block down is not running
-                  url:'../functions/Helper.php',
-                  method:'POST',
-                  data:{load_product:1, 
-                    userid:userid
-                     },
+                  <?php include("./symbols.php")  ?>
+                  
+              </select> 
+            </div>
+            <div class="form-group1"> 
+            <label for="checkbox">Status </label>
+          <input class="form-check-input" type="checkbox"  id="status" value="Available" checked> 
+          <label class="form-check-label" for="flexSwitchCheckDefault">Available</label>
+            </div>
+            <div class="form-group1"> 
+                  <label for="InputPrice">Price</label>
+                    <input type="number" class="form-control" id="Price" aria-describedby="price" placeholder="Enter product price" name="price">   
+            </div> 
+            <div class="form-group1">
+               <h6 class="form-group1 error" id="error"><small></small></h6> 
+              </div>
+              <div class="form-group1">
+              <button type="button" id="btn-save-product" class="btn btn-primary btn-block" name="save">Save</button>   
+              </div> 
+        </div>
+        
+      </div>
+      </div>
+    </div>
+  </div> 
+  
+<!-- UPDATE PRODUCT PRICE MODAL--> 
+  <!-- Button trigger modal -->
+  <button type="button" id="btn_updateprice_model" data-bs-toggle="modal" data-bs-target="#UpdatePrice_modal"> 
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="UpdatePrice_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="staticBackdropLabel">Update Product</h4> 
+          <button type="button" id="btn_close_price_update" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <div class="form-group1"> 
+        <h5 class="mb-2 text-muted">Update product price</h5>
+              <label for="Products">Select product</label>
+              <select id="select_product" class="form-control"> 
+              </select> 
+            </div>
+            <div class="form-group1"> 
+                  <label for="InputPrice">Price</label>
+                    <input type="number" class="form-control" id="new_Price" aria-describedby="price" placeholder="Enter new price" name="price">   
+            </div> 
+            <div class="form-group1"> 
+            <label for="checkbox">Status </label>
+          <input class="form-check-input" type="checkbox"  id="updated_status" value="Available" checked> 
+          <label class="form-check-label" for="flexSwitchCheckDefault">Available</label>
+            </div> 
+          <div class="form-group1">
+             <h6 class="form-group1 error" id="price_error"><small></small></h6> 
+            </div>
+            <div class="form-group1">
+            
+              <button type="button" id="btn_update_price" value="Reload" class="btn btn-primary btn-block" name="update">Update</button>   
+              </div>  
+        </div>
+        
+      </div>
+      </div>
+    </div>
+  </div> 
+  
+   
+<!-- ajax functions --> 
 
-                  success:function(response){
-                    console.log(response); 
-                    if(response.Error){
+<script>
+ 
+ $(document).ready(function(){
+   var addProduct_model= document.querySelector("#btn_addProduct_modal");
+   var notification= document.querySelector("#notification_model");
+   var headContainer= document.querySelector("#header"); 
+   ("#notification_model");
+   var btn_updateprice_model= document.querySelector("#btn_updateprice_model"); 
+   addProduct_model.style.display='none';
+   notification.style.display='none';   
+   btn_updateprice_model.style.display='none'; 
+   var error=""; 
+   
+   
+   loadproduct();
+  var status=$("#status").val(); 
+  
+  $("#status").on('change',function(){ 
+     if($(this).prop('checked')){
+       status=$("#status").val(); 
+     }else{
+       status="Not";
+     } 
+  });
+  var updatestatus=$("#update_status").val(); 
+  $("#update_status").on('change',function(){ 
+     if($(this).prop('checked')){
+       updatestatus=$("#update_status").val(); 
+     }else{
+       updatestatus="Not";
+     } 
+  });
+  
+   $("#addProduct").on('click',function(){ 
+     $("#btn_addProduct_modal").trigger('click');
+   });
 
-                    }else{ 
-                       for(const res in response){
-                         for(const data in res){
-                      var row ="<tr><td>" +data.Name+ "</td><td>" + data.Symbol+ "</td><td" +data.Price +"</td><td>"+data.Status +"</td></tr>"; 
-                       $("table tbody").append(row);
-                         }
-                        }
-                      }
-                       
-                  },
-                  dataType:'json'
-                });
-              }
-            }); 
-          </script>
-          <script src="../js/bootstrap.min.js"></script>
+
+   $("#btn-save-product").on('click',function(){ 
+     var product=$("#ProductName").val(); 
+     var symbol=$("#pro_symbols").val(); 
+     var price=$("#Price").val(); 
+     var usertype ="<?php echo $_SESSION["UserType"]; ?>";
+    
+      if(product =="" || product==null){
+        error="Provide product name";
+      }else if(symbol.toLowerCase()=="select"){
+        error="Select product symbol";
+      }else if(price=="" ||price==null){
+        error="Provide product price";
+      }else if(price<=0){
+        error="invalid price";
+      }else if(Number.isNaN(price)){
+         error="Invalid character";
+      } else{
+       const input = $('#Price')[0]
+           var dotPos = null;
+           input.oninput = function(e) {
+           if (e.data === '.') {
+             dotPos = input.value.length
+           }
+           }
+           
+           var value = input.value
+           if (value.includes('.')) {
+             dotPos = value.indexOf('.')
+           } else if (!value.includes('.') && dotPos === null) {
+             input.value += '.00'
+           }
+           if (dotPos !== null) {
+             var sliced = value.slice(dotPos + 1)
+             if (sliced.length > 2) {//round up to 2dp
+             input.value = Number(value).toFixed(2)
+             } else if (sliced.length === 1) {
+             input.value += '0'
+             } else if (sliced.length === 0) {
+             input.value += '.00'
+             }
+           }
+         
+      }
+      var price=$("#Price").val(); 
+     if(error!=""){
+       $("#error").html(error);
+       error="";
+     }else{
+         $.ajax({
+             url:'../functions/Helper.php',
+             method:'POST',
+             data:{
+               add_product:1,
+               product:product,
+               symbol:symbol,
+               status:status,
+               price:price,
+               usertype:usertype 
+             },
+             success:function(response){
+                 if(response.Success){  
+                   $("#notification_model").trigger('click');
+                 } else if (response.Error) {
+                   $("#error").html(response.Error);
+                 }
+             },
+             dataType:'json'
+          });
+
+     }
+   });
+   
+   $("#ProductName").on('keydown',function(){ 
+     erro="";
+     $("#error").html(error);
+   });
+
+   $("#symbols").on('click',function(){ 
+     erro="";
+     $("#error").html(error);
+   });
+
+   $("#Price").on('click',function(){ 
+     erro="";
+     $("#error").html(error);
+   });
+
+   $("#btn-close").on('click',function(){ 
+     erro="";
+     $("#error").html(error);
+   });
+ 
+ $("#btn_close_price_update").click(function(){
+    $("#select_product").empty();
+ })
+   $("#btn-notification").on('click',function(){   
+    window.location.reload(true); 
+   }  
+   );
+    
+   //UPDATE PRODUCT DETAILS
+   $("#btn_update_product").on('click',function(){
+    var oldProduct=$("#productName").val(); 
+     
+     var newProduct=$("#ProductNewName").val(); 
+     var symbol =$("#symbols").val();
+      
+     if(oldProduct =="" || oldProduct==null || oldProduct.toLowerCase()==="select" ){
+        error="Select product name";
+      }else if(newProduct==="" ||newProduct===null){
+        error="Provide new name";
+      }else if(symbol ==="" || symbol.toLowerCase()==="select" ){
+        error="Select product symbol";
+      }  
+     if(error!=""){
+       $("#product_error").html(error);
+       error="";
+     }else{
+      $("#product_error").html("");
+      $.ajax({ 
+       url:'../functions/Helper.php',
+       method:'POST',
+       data:{
+        product_update:1, 
+        oldProduct:oldProduct,
+         newProduct:newProduct,
+         status:status,
+         symbol:symbol,
+         userid:"<?php echo $_SESSION["UserType"]; ?>"
+          },
+
+       success:function(response){ 
+        
+         if(response.Error){
+          $("#product_error").html(response.Error);
+         }else{   
+                   $("#notification_model").trigger('click'); 
+                  
+           } 
+       },
+       dataType:'json'
+     });
+     }
+     
+   }); 
+   
+   //update product status
+   $("#btn_update_status").click(function () { 
+    var product=$("#updateProStatus").val(); 
+     var error="";
+     
+     if(product==="" || product===null || product.toLowerCase()==="select"){
+     error="Select a product";
+     }
+     
+     if(error !=""){
+     $("#status_error").html(error);
+     error="";
+     }else{
+      $("#status_error").html(error);
+     $.ajax({ 
+      url:'../functions/Helper.php',
+       method:'POST',
+       data:{
+       update_status:1, 
+       product:product,
+       updatestatus:updatestatus,
+         userid:"<?php echo $_SESSION["UserType"];  ?>"
+          }, 
+       success:function(response){
+                if(response.Success){  
+                   $("#notification_model").trigger('click');
+                 } else if (response.Error) {
+                   $("#status_error").html(response.Error);
+                 }
+       },
+       dataType:'json'
+     });
+     
+     }
+   });
+   
+   //load products
+   function loadproduct() {
+    var userid="<?php echo $_SESSION["UserType"];  ?>";
+     
+     $.ajax({ 
+       url:'../functions/Helper.php',
+       method:'POST',
+       data:{load_product:1, 
+         userid:userid
+          },
+
+       success:function(response){ 
+          
+         if(response.Error){
+          
+         }else{  
+          var availCount=0;  
+           $("#pro-count").text(response.length);
+          $("#all-product").addClass("#all-product");
+           $(response).each(function(){
+             var datarow="<tr><td>"+this.Name +"</td><td>"+this.Symbol+"</td><td>" +this.Price + "</td><td>" +this.Status+   "</td><td>" +this.Date+  "</td><td>" +this.Time+  "</td></tr>";
+             $("#all-product").append(datarow);
+               var data={"Name":this.Name,"Symbol":this.Symbol,"Price":this.Price,"Status":this.Status}; 
+                
+               if(this.Status=="Available"){
+                   availCount +=1;
+                 } 
+                 $("#pro-details").html("Available: "+availCount);
+           }  ); 
+           
+           } 
+       },
+       dataType:'json'
+     }); 
+   }
+   
+   //delete product
+   $("#btn_delete").click(function(){  
+    var product=$("#deleteProduct").val();   
+     if(product ==="" ||product==null ||product.toLowerCase()==="select"   ){
+        error="Select a product";
+      }  
+     if(error!=""){
+       $("#delete_error").html(error);
+       error="";
+     }else{
+      $("#product_error").html("");
+      $.ajax({ 
+       url:'../functions/Helper.php',
+       method:'POST',
+       data:{
+        delete_product:1, 
+        product:product, 
+         userid:"<?php echo $_SESSION["UserType"]; ?>"
+          }, 
+       success:function(response){  
+         if(response.Error){
+          <?php $message= "Product deleted successfully"?>;
+          $("#delete_error").html(response.Error);
+         }else{  
+          $("#notification_model").trigger('click'); 
+           } 
+       },
+       dataType:'json'
+     }); 
+     }
+   });
+   
+   //load product infor
+   $("#updatePrice").click(function(){
+   $("#btn_updateprice_model").trigger('click');
+    loadData();
+   });
+   
+   function loadData(){
+    var datarow="<option value=Select>Select</option>" ;
+             $("#select_product").append(datarow);
+             $.ajax({ 
+       url:'../functions/Helper.php',
+       method:'POST',
+       data:{load_product_names:1, 
+         userid:"<?php echo $_SESSION["UserType"];  ?>"
+          }, 
+       success:function(response){ 
+        
+         if(response.Error){ 
+         }else{   
+           $(response).each(function(){
+             var datarow="<option value='"+this.Proid +"'>"+this.Name+"</option>" ;
+             $("#select_product").append(datarow); 
+                 
+           }  ); 
+           
+           } 
+       },
+       dataType:'json'
+     });
+   
+   } 
+   $("#btn_update_price").click(function(){ 
+    var p_product=$("#select_product").val();  
+     var price=$("#new_Price").val(); 
+      
+     if(p_product =="" || p_product==null || p_product.toLowerCase()==="select"){
+        error="Select product";
+      }else if(price=="" ||price==null){
+        error="Provide product price";
+      }else if(price<=0){
+        error="invalid price";
+      }else if(Number.isNaN(price)){
+         error="Invalid character";
+      } else{
+       const input = $('#new_Price')[0]
+           var dotPos = null;
+           input.oninput = function(e) {
+           if (e.data === '.') {
+             dotPos = input.value.length
+           }
+           }
+           
+           var value = input.value
+           if (value.includes('.')) {
+             dotPos = value.indexOf('.')
+           } else if (!value.includes('.') && dotPos === null) {
+             input.value += '.00'
+           }
+           if (dotPos !== null) {
+             var sliced = value.slice(dotPos + 1)
+             if (sliced.length > 2) {//round up to 2dp
+             input.value = Number(value).toFixed(2)
+             } else if (sliced.length === 1) {
+             input.value += '0'
+             } else if (sliced.length === 0) {
+             input.value += '.00'
+             }
+           }
+         
+      }
+      var price=$("#new_Price").val(); 
+     if(error!=""){
+       $("#price_error").html(error);
+       error="";
+     }else{
+         $.ajax({
+             url:'../functions/Helper.php',
+             method:'POST',
+             data:{
+               update_price:1,
+               p_product:p_product, 
+               price:price,
+               status:updated_status,
+               userid:"<?php echo $_SESSION["UserType"]; ?>" 
+             },
+             success:function(response){
+                 if(response.Success){  
+                   $("#notification_model").trigger('click');
+                 } else if (response.Error) {
+                   $("#price_error").html(response.Error);
+                 }
+             },
+             dataType:'json'
+          });
+
+     }
+   });
+   //update product price status
+   var updated_status=$("#updated_status").val(); 
+  $("#updated_status").on('change',function(){ 
+     if($(this).prop('checked')){
+       updated_status=$("#status").val(); 
+     }else{
+       updated_status="Not";
+     } 
+  });
+   
+   $("#btn_close_price_update").on('click',function(){ 
+    $("#price_product").empty();
+   });
+  
+  $("#btn-close-details_update").on('click',function(){
+    $("#productsName").empty();
+  });
+  
+  });
+</script>
+<script src="../js/bootstrap.min.js"></script>
+
 </body>
 </html>

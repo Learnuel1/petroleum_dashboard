@@ -6,7 +6,7 @@ class Database{
     private $db_name='marketwatch_db';
     private $username='root';
     private $password='';
-    public $conn='';
+    public $conn='';    
 
     public function __construct()
     {

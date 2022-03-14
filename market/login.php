@@ -1,5 +1,5 @@
 <?php
- 
+   
   session_start();
   if(isset($_SESSION["LoggedIn"])){
       $user_type=$_SESSION["UserType"];
@@ -17,7 +17,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">  
-    <link href="../css/loginstyle.css" rel="stylesheet" type="text/css" media="screen"> 
+    <link href="../css/login.css" rel="stylesheet" type="text/css" media="screen"> 
+    <link rel="icon" type="image/x-icon" href="../icons/favicon.ico"> 
     <script type="text/javascript" src="../js/jquery.js"></script>
 </head>
 <body> 
@@ -27,16 +28,15 @@
                         <img src="../icons/pumprice-icon-3.png">
                     </a>
             </div>
-        </div>
-    <section class="container-fluid bg">
-        <section class="row justify-content-center">
-            <section class="col-12 col-sm-6 col-md-3">
-                <form name="login-fm" class="form-container"   method="POST" > 
+        </div> 
+        <header id="showcase">
+         <div class="content">
+         <form name="login-fm" class="form-container"   method="POST" > 
                             <h5 class="form-group">Please Login</h5>
                         <div class="form-group">
-                            <lable for="InputEmail">Email address</lable>
+                            <label for="InputEmail">Email address</label>
                             <input type="email"class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="enter email" name="email">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                             <small id="emailHelp" class="form-text text-muted"> Your email won't be made public.</small> 
                         </div>
                         <div class="form-group">
                             <label for="InputPassword">Password</label>
@@ -59,23 +59,19 @@
                             <label class="form-text-2">Not a user ?<a href="./user_registration.php" class="infor"> Register</a> </label>
                         </div>
                     </form> 
-                </section>
-            </section>
-        </section> 
-    </div> 
-    <script type="text/javascript">   
-        $(document).ready(function(){  
-            var error=""; 
-            $("#InputEmail").on('keydown',function(){ 
-                $("#login-error").html(error);
-            });
-            $("#InputPassword").on('keydown',function(){ 
-                $("#login-error").html(error);
-            });
-            $("#login").on('click',function(){
+         
+         </div> 
+        </header>
+          
+    <script>
+     $(document).ready(function(){ 
+        var error=""; 
+           
+        $("#login").on('click',function(){
                 var email=$("#InputEmail").val();
                 var password=$("#InputPassword").val();
                 let regex = new RegExp('[a-z0-9]+@[a-z]+[.]+[a-z]{2,3}');
+                email =email.toLowerCase();
                 if(email=="" || email==null){
                     error="Enter email address";
                 }else if(!regex.test(email)){
@@ -93,7 +89,7 @@
                         data:{login:1,email:email,password:password }, 
                         success:function(response){  
                              if(response.Regid==0){  
-                                 window.location="./price.php";
+                                 window.location="./pumpprice.php";
                              }else if(response.Regid>0){
                                  window.location="./dashboard.php"; 
                              }else{
@@ -104,10 +100,30 @@
                     });
                 } 
             });
- 
-        });
+      
+        $("#InputEmail").on('keydown',function(){ 
+                $("#login-error").html(error);
+            });
+            
+            $("#InputPassword").on('keydown',function(){ 
+                $("#login-error").html(error);
+            });
+         $("#InputPassword").keypress(function(e){ 
+             if(e.which==13){ 
+             $("#login").trigger('click');
+             }
+          });
+          
+          $("#InputEmail").keypress(function(e){
+          if(e.which==13){
+            $("#login").trigger('click');
+          }
+          }) 
+     }); 
+     
     </script>
+    
     <script src="../js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/54be263888.js" crossorigin="anonymous"></script>
+    
 </body>
 </html>

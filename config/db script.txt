@@ -25,3 +25,41 @@ SELECT p.Proid,Regid AS Userid,Name,Symbol,Cost,Status,DateAdded, Date AS Update
 FROM products p 
 INNER JOIN price b ON p.Proid=b.Proid
 
+ 
+ PROCEDURES 
+ 
+ 
+ DELIMITER //
+CREATE PROCEDURE sp_update_price(IN name varchar(30),IN price decimal(7,2),IN status varchar(20), IN userid INT(11))
+BEGIN
+ INSERT INTO price(Proid,Cost)
+ VALUES((SELECT Proid FROM products WHERE Name=name LIMIT 1),price);
+  
+END //
+DELIMITER ;
+
+
+
+CREATE VIEW view_product_price
+AS
+SELECT p.Regid,Priceid, P.Proid,Name,Symbol,Cost,Status,CONVERT(P.DateAdded,Date)AS Created ,CONVERT(price.Date,Date)AS Date,CONVERT(price.Date,Time)AS Time
+FROM products P
+INNER JOIN price ON P.Proid=price.Proid
+
+DELIMITER //
+CREATE PROCEDURE sp_get_user_products(IN userid int(11))
+BEGIN
+SELECT DISTINCT Name FROM view_product_price
+WHERE Regid=userid;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_current_products_price(IN product varchar(30),IN userid INT(11))
+BEGIN
+SELECT Regid,Proid,Name,Symbol,Cost,Status,Created,Date,Time
+FROM view_product_price 
+WHERE Name=product AND Regid=userid ORDER BY Priceid DESC LIMIT 1;
+END //
+DELIMITER ;
+

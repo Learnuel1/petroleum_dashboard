@@ -9,7 +9,8 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pump price</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen"> 
-    <link href="../css/loginstyle.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="../css/login.css" rel="stylesheet" type="text/css" media="screen">
+    
     <script type="text/javascript" src="../js/jquery.js"></script>
 </head>
 <body>
@@ -31,7 +32,7 @@ session_start();
                 <div class="form-group">
                     <h5 class="form-group">Reset Password</h5>
                     
-                    <lable for="InputEmail">Email address</lable>
+                    <label for="InputEmail">Email address</label>
                     <input type="email"class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="<?php echo $_SESSION["Email"]  ?>" name="email" disabled>
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>

@@ -10,13 +10,14 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pump price</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen"> 
-    <link href="../css/loginstyle.css" rel="stylesheet" type="text/css" media="screen"> 
+    <link href="../css/login.css" rel="stylesheet" type="text/css" media="screen"> 
+    <link rel="icon" type="image/x-icon" href="../icons/favicon.ico"> 
     <script type="text/javascript" src="../js/jquery.js"></script>
-    <script src="https://kit.fontawesome.com/54be263888.js" crossorigin="anonymous"></script>
+    <link href="../icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" > 
+     <link href="../icons/linea-icons/linea.css" rel="stylesheet" > 
+     <link href="../icons/material-design-iconic-font/css/materialdesignicons.min.css" rel="stylesheet" >  
 </head>
-<body>
-     
- <div class="container-fluid">
+<body> 
         <div class="nav">
             <div class="logo"> 
                     <a class="infor" href="../index.php">
@@ -24,41 +25,41 @@ session_start();
                     </a>
             </div>
         </div>
-        <section class="container-fluid bg">
-        <section class="row justify-content-center">
-            <section class="col-12 col-sm-6 col-md-3">
+        <header id="showcase-2">
+        <div class="content">
+        <form name="register" class="form-container" action="../functions/Helper.php" method="POST">
                 
-                <form name="register" class="form-container" action="../functions/Helper.php" method="POST">
-                
-                    <div class="form-group">
-                        <h5 class="form-group">Registration</h5>
-                        
-                        <lable for="InputEmail">Email address</lable>
-                        <input type="email"class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email" name="email">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="InputPassword">Password</label>
-                        <input type="password" class="form-control" id="InputPassword" placeholder="Password" name="password1">
-                    </div>
-                    <div class="form-group">
-                        <label for="InputPassword">Password</label>
-                        <input type="password" class="form-control" id="InputPassword2" placeholder="Confirm password" name="password2">
-                    </div>
-                    <div class="form-group form-check"> 
-                       <label class="form-text-2"  >Already a user ?  <a class="infor" href="./login.php"> Login</a> </label>
-                    </div>
-                     
-                    <div class="form-group">
-                        <h6 class="form-group" id="login-error"><small></small></h6>
-                        
-                    </div>
-                    <button type="button" id="user_register" class="btn btn-primary btn-block" name="user_register">Submit</button>
-                     
-                </form> 
-            </section>
-        </section>
-    </section>
+                <div class="form-group">
+                    <h5 class="form-group">Registration</h5>
+                    
+                    <label for="InputEmail">Email address</label>
+                    <input type="email"class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="InputPassword">Password</label>
+                    <input type="password" class="form-control" id="InputPassword" placeholder="Password" name="password1">
+                </div>
+                <div class="form-group">
+                    <label for="InputPassword">Password</label>
+                    <input type="password" class="form-control" id="InputPassword2" placeholder="Confirm password" name="password2">
+                </div>
+                <div class="form-group form-check"> 
+                   <label class="form-text-2"  >Already a user ?  <a class="infor" href="./login.php"> Login</a> </label>
+                </div>
+                 
+                <div class="form-group">
+                    <h6 class="form-group" id="login-error"><small></small></h6>
+                    
+                </div>
+                <button type="button" id="user_register" class="btn btn-primary btn-block" name="user_register">Submit</button>
+                 
+            </form> 
+        
+        </div>
+        </header>
+        
+          
     
   <!-- Button trigger modal -->
   <button type="button" id="message_model" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> 
@@ -80,6 +81,7 @@ session_start();
       </div>
     </div>
   </div> 
+  
     <script type="text/javascript"> 
         $(document).ready(function(){
             var message= document.querySelector("#message_model");
@@ -107,7 +109,7 @@ session_start();
                 if(error !=""){
                     $("#login-error").html(error) ; 
                     error="";
-                    error="";
+                    
                 }else{
                     //connect to php
                     $.ajax({

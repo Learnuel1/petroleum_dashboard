@@ -1,5 +1,4 @@
-<?php
- include_once("../Config/Accessdata.php");
+<?php 
 class Userlogin{
         public $Error_log;
         public static $Regid;
@@ -41,9 +40,8 @@ class Userlogin{
             return false;
         }
     }
-    public function register_business($buisness,$cac,$email,$state,$city,$contact,$address,$conn){
-       $query="INSERT INTO business (BusinessName,CAC,Email,State,City,Contact,Address)
-        VALUES('$buisness','$cac','$email','$state','$city', '$contact','$address') ";
+    public function register_business($buisness,$cac,$email,$state,$city,$contact,$address,$password,$website,$conn){
+       $query="CALL sp_register_business('$buisness','$cac', '$contact','$email','$state','$city','$address','$password','$website')";  
         if (mysqli_query($conn, $query)) { 
                     $this->Error_log=null;
         } else {

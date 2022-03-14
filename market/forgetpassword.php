@@ -10,7 +10,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pump price</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen"> 
-    <link href="../css/loginstyle.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="../css/login.css" rel="stylesheet" type="text/css" media="screen">
     <script type="text/javascript" src="../js/jquery.js"></script>
 </head>
 <body> 
@@ -25,14 +25,13 @@ session_start();
         <section class="row justify-content-center">
             <section class="col-12 col-sm-6 col-md-3">
 
-                <form class="form-container"   method="POST">
+                <form class="form-container"  method="POST">
                     <h5 class="form-group">Find Account</h5>
                     <div class="form-group">
-                        <lable for="InputEmail">Email address</lable>
+                        <label for="InputEmail">Email address</label>
                         <input type="email"class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email address"> 
                         <small id="emailHelp" class="form-text text-muted">The email that was used to sign up.</small>
-                    </div> 
-                     
+                    </div>  
                     <div class="form-group">
                         <p class="form-group"><a href="./login.php" class="infor">Login</a> </p>
                     </div>
@@ -109,8 +108,7 @@ session_start();
                                         
                                     }else{
                                         $("#login-error").html(response.Error);
-                                    }
-                               
+                                    } 
                             },
                             dataType:'json'
                     });
@@ -119,9 +117,14 @@ session_start();
             $("#btn_message_model").on('click',function(){
                 window.location="../index.php";
         });
+        $("#InputEmail").keypress(function (e) {  
+            if(e.which==13){
+            $("#forget_password").trigger('click');
+            }
+        });
         });
     </script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/54be263888.js" crossorigin="anonymous"></script>
+    
 </body>
 </html>
