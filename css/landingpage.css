@@ -57,7 +57,8 @@ html{
     
 }
 #landingpage{
-    background-image: url("../images/bk_station.jpg");
+    /* background-image: url("../images/bk_station.jpg"); */
+    background-image: url("../images/new_bk.png");
     background-size: cover;
     background-position: center;
     display: flex;
@@ -85,8 +86,9 @@ html{
     width: 100%;
     font-size: 6rem; 
     letter-spacing: 2px; 
-    color: wheat;
+    color: rgb(233, 229, 19);
     line-height: 1.2; 
+    font-family: fantasy;
     
 }
 @keyframes scale {
@@ -100,11 +102,12 @@ html{
  
 
 .text-left{
-    font-size: 2rem;  
+    font-size: 3rem;  
     color: whitesmoke;
     font-stretch: semi-expanded;
-    line-height: 1.5;
+    line-height: 1.2;
     width: 70%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .jumbotron{
  margin-top: 20px;

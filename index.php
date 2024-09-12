@@ -142,11 +142,10 @@ session_start();
  
   <section id="landingpage">
       <div class="row">
-      <h1 class="text-left-header">Register Filling Station</h1>
+      <h1 class="text-left-header">Welcome to Pump Price</h1>
           <p class="text-left"> 
           Register your gas station for easy price display for customers.
-          This can increase your sales to a great extent. Provide the required
-          details in the form and wait for a confirmation email.
+          This can increase your sales to a great extent.  
           And know when there is change in price. to check for affordable Price
           in the market with other sellers.
           </p> 
