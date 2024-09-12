@@ -209,5 +209,24 @@ public function state_search($search,$conn){
         return $result[]= array("None"=>"None");
       }
     }
+    
+    public function watch_list_search($search,$conn){
+   
+        $query="SELECT Regid, BusinessName,Address,Contact,Symbol,Status, Cost,State,City,Website,Name,Date,Time,Proid
+        FROM view_current_price WHERE Name LIKE '%$search%' 
+        ORDER BY BusinessName Asc ";
+        $product=$conn->query($query); 
+        if($product->num_rows>0){  
+            while($row= $product->fetch_assoc()){
+            $result[] =$row;
+            } 
+            return $result;
+              } else{
+                return $result[]= array("None"=>"None");
+              }
+            } 
+    
   }
+  
+  
 ?>

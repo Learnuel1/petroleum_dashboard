@@ -304,8 +304,19 @@ if(isset($_GET["search_address"])){
   }else{ 
      echo json_encode(array("Error"=>$product->Error_log));
   }
- 
 }
+if(isset($_GET["watch_list_search"])){
+   $search=$db->conn->real_escape_string( $_GET["watch_search_text"]);
+  
+   $product = new Product(); 
+  $data= $product->watch_list_search($search,$db->conn);
+   if($product->Error_log==null){ 
+         echo json_encode($data); 
+  }else{ 
+     echo json_encode(array("Error"=>$product->Error_log));
+  }
+}
+
 ?>
 
  

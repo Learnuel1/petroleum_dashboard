@@ -204,10 +204,13 @@ if(!isset($_SESSION["UserType"])){
 
 <?php  include_once("./footer.php")?> 
 <?php  include_once("./product_search_result.php")?> 
+<?php  include_once("./watch_search_modal.php")?> 
  <script>
   $(document).ready(function(){ 
   var search_modal_btn = document.querySelector("#search_result_model");
+  var search_watchlist_btn = document.querySelector("#btn_watchlist_search_modal");
   
+  search_watchlist_btn.style.display='none';
   search_modal_btn.style.display='none';
     $(document.body).on("click",'tr[data-href]',function(){  
         var proname=this.dataset.href;  
@@ -423,22 +426,53 @@ if(!isset($_SESSION["UserType"])){
         
       });
       
-    $("#btn-watchlist").click(function(){ 
-        var seachhBox="<div class=search-panel id=watchsearch> <input type=text id=watchlist_searchtext  class=searchtext placeholder='search product' spellcheck=false><a class=button> <i class='fa fa-search search-icon' aria-hidden=true></i></a> <hr class=separator> </div>";
-        var container = document.querySelector("#search_result_modal_body");
-        $(container).append(seachhBox);
-        $("#search_result_model").trigger('click');
-        
+    $("#btn-watchlist").click(function(){  
+        $("#btn_watchlist_search_modal").trigger('click');
+         
     }); 
- 
+     
+     $("#watchlist_searchtext").on('input',function () {
+      var search=$("#watchlist_searchtext").val();
+      $("#watch_container").empty();
+      var container=document.querySelector("#watch_container");
+      if(search.length>2){ 
+      $.ajax({
+       url:'../functions/Helper.php',
+       method:'GET',
+       data:{
+       watch_list_search:1,
+       watch_search_text:search
+       },
+       success:function(response){
+            if(!response.None || !response.Error){
+           $(response).each(function(){
+           //create div 
+           var DataItem="<div class="+"watch_searchItems"+" ><div class="+"search-address"+"><spand class="+"watch_list"+">"+this.BusinessName+"</spand> <span class="+"watch_list"+">"+this.Name+"</span> <span class="+"watch_list"+">"+this.Cost+"</span>  <button class="+"btn btn-mywatch btn-watch"+" id="+this.Proid+"><i class="+"'fa fa-plus-circle list_add'"+" aria-hidden="+"true"+"></i> </button></span></div> <div class="+"search-address"+">"+this.Address+"</div></div><hr>"; 
+           
+           $(container).append(DataItem);
+           });
+            }
+       },
+       dataType:'json'
+      });
+      
+      }
+     })
+     
     //========================
     $("#btn_modal_close").click(function(){
+    
         $("#search_result_modal_body").empty();
           
     });
-     
-    
+     $("#btn_close_watch_search").click(function() {
+        $("#watchlist_searchtext").val("")
+        $("#watch_container").empty();
+     });
+  
   }); 
+  
+  
  </script>
 </body>
 </html>

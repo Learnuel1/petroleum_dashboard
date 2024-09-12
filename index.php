@@ -1,11 +1,95 @@
 <?php
- include_once("./functions/infor.php");
+ include_once("./functions/infor.php"); 
+ include_once("./functions/loadindex_file.php"); 
+
 session_start();
    if(isset($_SESSION["LoggedIn"])){
      unset($_SESSION["UserType"]);
      unset($_SESSION["LoggedIn"]);
      session_destroy();
     }
+
+?>
+
+<?php 
+
+ function add_product($data,$bizinfor){ 
+        ?> 
+         <div class="card products" id="<?php $bizinfor["Regid"] ?> ">
+            <div class="card-body"> 
+            
+            <?php
+                       if($bizinfor["Website"] !="none" && $bizinfor["Website"] !=null ){
+                       ?>
+                       <h5 class="heading details bizName" data="<?php echo $bizinfor["Name"]; ?>" id="<?php echo $bizinfor["Name"]; ?>">   
+                       <i class="fa fa-building-o biz-infor" aria-hidden="true"></i>  <?php echo $bizinfor["Name"]; ?></h5>
+                        <?php
+                       }else{
+                        ?>
+                       <h5 class="heading details bizName" data="<?php echo $bizinfor["Name"]; ?>" id="<?php echo $bizinfor["Name"]; ?>"  > 
+                       <i class="fa fa-building-o biz-infor" aria-hidden="true"></i>  <?php echo $bizinfor["Name"]; ?></h5>
+                        <?php
+                       }
+                       ?>  
+            </h5>
+
+            <table class="table">
+                            <thead >
+                            <tr> 
+                                <th scope="row">Product</th>
+                                <th scope="row">Sym</th>
+                                <th scope="row">Price</th> 
+                                <!-- <th scope="row">Date</th>
+                                <th scope="row">Time</th> -->
+                                <th scope="row">Status</th>
+                                
+                            </tr>
+                            </thead>
+                            <tbody  id="<?php $bizinfor["Regid"] ?>"> 
+                            <?php 
+                            foreach($data as $details){
+                                ?> 
+                                <tr data-href="<?php echo $details["Name"]; ?>"> 
+                                <td ><?php echo $details["Name"]; ?> </td>
+                                <td  ><?php echo $details["Symbol"] ;?></td>
+                                <td><?php echo $details["Cost"]; ?></td> 
+                                <td  > 
+                                <?php  if( $details["Status"]=="Available"){  
+                                      ?>      
+                                       <i class="fa fa-circle available" aria-hidden="true"> <?php echo $details["Status"]; ?>
+                                </i>
+                                       <?php
+                                }else{
+                                    ?>      
+                                        <i class="fa fa-circle not" aria-hidden="true"> <?php echo $details["Status"]; ?>
+                                    <?php
+                                } ?>
+                                </td>
+                               </tr>
+                               <?php
+                            }
+                          ?>
+                           </tbody>
+                      </table>
+                      <h5 class="address details"> <i class="fa fa-map-marker biz-infor" aria-hidden="true"></i> <?php echo $bizinfor["Address"]; ?></h5> 
+                      <h5 class="contact details"><i class="fa fa-phone biz-infor" aria-hidden="true"></i> <?php echo $bizinfor["Contact"]; ?> <i class="fa fa-product-hunt biz-infor" aria-hidden="true"></i> <?php echo $bizinfor["State"]; ?> <?php echo " "?> <?php echo $bizinfor["City"]; ?>  </h5>
+                      <?php
+                       if($bizinfor["Website"] !="none" && $bizinfor["Website"] !=null ){
+                       ?>
+                        <h5 class="address details"><a class="link" href="<?php echo $bizinfor["Website"]; ?>" target="_blank" > <i class="fa fa-link biz-infor" aria-hidden="true"></i> <?php echo $bizinfor["Website"]; ?> </a></h5>
+                        
+                        <?php
+                       }
+                       ?>
+                      <div class="contact-infor">  
+                      </div>
+                      
+                </div>
+            </div> 
+        <?php
+ }
+  
+  
 
 ?>
 <!DOCTYPE html>
@@ -17,14 +101,18 @@ session_start();
   
     <title>pumpprice</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet" > 
+    <link href="./icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" > 
+     <link href="./icons/linea-icons/linea.css" rel="stylesheet" > 
+     <link href="./icons/material-design-iconic-font/css/materialdesignicons.min.css" rel="stylesheet" >  
+     
     <link href="./css/landingpage.css" rel="stylesheet" type="text/css" media="screen">
      <link href="./css/landingsection.css" rel="stylesheet" type="text/css" media="screen">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="icon" type="image/x-icon" href="./icons/favicon.ico"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&display=swap" rel="stylesheet">
+   
+    <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">  
     <script type="text/javascript" src="./js/jquery.js"></script>
-    <script src="https://kit.fontawesome.com/54be263888.js" crossorigin="anonymous"></script>
+   
+    <link href="./icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" > 
+
 </head>
 <body>
  <div class="container-fluid">  
@@ -52,13 +140,13 @@ session_start();
             </ul>   
   </div>
  
-  <header id="landingpage">
+  <section id="landingpage">
       <div class="row">
       <h1 class="text-left-header">Register Filling Station</h1>
           <p class="text-left"> 
           Register your gas station for easy price display for customers.
           This can increase your sales to a great extent. Provide the required
-          details in the form and wait for a comfirmation email.
+          details in the form and wait for a confirmation email.
           And know when there is change in price. to check for affordable Price
           in the market with other sellers.
           </p> 
@@ -67,14 +155,14 @@ session_start();
       <input type="button" id="get-started" class="btn btn-primary btn-block" name="get-started" value="Get Started" >   
         </div> 
     </div> 
-  </header>
-   
+</section>
+ 
  <?php include_once("./market/footer.php");?>
  
     </div>   
   <script>
     $(document).ready(function(){
-      $("#get-started").on('click',function(){
+      $("#get-started").on('click', function(){
         window.location="./market/register_gas_station.php";
       });
     });
