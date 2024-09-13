@@ -117,8 +117,7 @@ if(!isset($_SESSION["LoggedIn"])){
            </div>
         </div>
   
-    </div>
-    <?php include("./footer.php")?> 
+    </div> 
     
 
 <!--NOTIFICATION MODAL-->  
@@ -246,7 +245,7 @@ if(!isset($_SESSION["LoggedIn"])){
    var addProduct_model= document.querySelector("#btn_addProduct_modal");
    var notification= document.querySelector("#notification_model");
    var headContainer= document.querySelector("#header"); 
-   ("#notification_model");
+  //  ("#notification_model");
    var btn_updateprice_model= document.querySelector("#btn_updateprice_model"); 
    addProduct_model.style.display='none';
    notification.style.display='none';   

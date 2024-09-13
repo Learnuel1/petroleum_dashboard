@@ -101,13 +101,13 @@ session_start();
   
     <title>pumpprice</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet" > 
-    <link href="./icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" > 
-     <link href="./icons/linea-icons/linea.css" rel="stylesheet" > 
+    <link href="./css/bootstrap.min.css" rel="stylesheet" > 
+    <link href="./css/landing.css" rel="stylesheet" type="text/css" media="screen">
      <link href="./icons/material-design-iconic-font/css/materialdesignicons.min.css" rel="stylesheet" >  
      
     <link href="./css/landingpage.css" rel="stylesheet" type="text/css" media="screen">
      <link href="./css/landingsection.css" rel="stylesheet" type="text/css" media="screen">
-   
+     <script src="https://kit.fontawesome.com/54be263888.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">  
     <script type="text/javascript" src="./js/jquery.js"></script>
    
@@ -141,18 +141,25 @@ session_start();
   </div>
  
   <section id="landingpage">
+                  <div class="header"> 
+                      <div class="img-wrapper">   
+                        <img src="./images/new_bk.png">
+                      </div>
+                  </div> 
       <div class="row">
-      <h1 class="text-left-header">Welcome to Pump Price</h1>
+      <div class="col-md-7">
+      <h1 class="text-left-header">Petroleum Dashboard</h1>
           <p class="text-left"> 
           Register your gas station for easy price display for customers.
           This can increase your sales to a great extent.  
-          And know when there is change in price. to check for affordable Price
-          in the market with other sellers.
+          And know when there is change in prices, to check for affordable pump Prices
+          of different stations.
           </p> 
      
       <div class="jumbotron"> 
-      <input type="button" id="get-started" class="btn btn-primary btn-block" name="get-started" value="Get Started" >   
+      <input type="button" id="get-started" class="btn-1" name="get-started" value="Get Started" >   
         </div> 
+</div>
     </div> 
 </section>
  

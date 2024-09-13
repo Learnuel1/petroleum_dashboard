@@ -6,8 +6,9 @@ session_start();
 <head>
   
 <link href="../css/login.css" rel="stylesheet" type="text/css" media="screen"> 
-
+<script src="https://kit.fontawesome.com/54be263888.js" crossorigin="anonymous"></script>
 <?php include("./contacthead.php")?> 
+<link href="../css/landingpage.css" rel="stylesheet" type="text/css" media="screen">
 <link href="../css/register_station.css" rel="stylesheet" type="text/css" media="screen"> 
 </head>
    
@@ -18,7 +19,7 @@ session_start();
     <section class="landing-page">
               <div class="header"> 
                 <div class="img-wrapper">   
-                  <img src="../images/phone_desk.jpg">
+                  <img src="../images/user_reg.jpg">
                 </div>
              </div> 
             <div class="box-1">
@@ -85,14 +86,16 @@ $(document).ready(function(){
    completeSuc.style.display='none';
     
     $("#register").on('click',function(){
+      let error=""; 
+      $("#registration-error").html(error)
       var businessname=$("#businessname").val();
-  var cacnumber=$("#cacnumber").val();
-  var email=$("#email").val();
-  var state=$("#state").val();
-  var city=$("#city").val();
-  var businesscontact=$("#businesscontact").val();
-  var address=$("#address").val();
-  var error=""; 
+  let cacnumber=$("#cacnumber").val();
+  let email=$("#email").val();
+  let state=$("#state").val();
+  let city=$("#city").val();
+  let businesscontact=$("#businesscontact").val();
+  let address=$("#address").val();
+ 
   
   let regex = new RegExp('[a-z0-9]+@[a-z]+[.]+[a-z]{2,3}');
                    

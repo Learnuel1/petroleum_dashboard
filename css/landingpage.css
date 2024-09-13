@@ -54,43 +54,50 @@ html{
     padding : 15px; 
     color: thistle;
     letter-spacing: 0.1px;
-    
 }
 #landingpage{
-    /* background-image: url("../images/bk_station.jpg"); */
-    background-image: url("../images/new_bk.png");
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction:  column;
     justify-content: flex-start;
     align-items: center;
-    text-align: center;
-    padding: 0px 20px;
-    height: 98vh; 
-    opacity: 1.4;
-    background-color: black;
+    text-align: center; 
+    height: auto;  
  }
   
-.row{ 
-    width: 70%; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center; 
-    height: inherit;
-   
-}
-.text-left-header{
+
+.header{
     width: 100%;
-    font-size: 6rem; 
-    letter-spacing: 2px; 
-    color: rgb(233, 229, 19);
-    line-height: 1.2; 
-    font-family: fantasy;
+    height: 98vh;  
     
 }
+.col-md-7{ 
+    margin-left: 25px;
+    width: 70%;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    color: white;
+    display:block;
+    align-content: center;
+    font-weight:lighter; 
+}
+
+.img-wrapper{
+    width: 100%;
+    height: 98vh;    
+    padding: 0px;
+    /* opacity: 1.4; */
+    background-color: rgba(0, 0, 0,0.5);    
+    overflow: hidden;
+}
+.img-wrapper img{
+    width: 100%;
+    height: 100%; 
+    opacity: .5;
+    animation: scale 25s infinite; 
+}
+
 @keyframes scale {
     0%{
         transform: scale(1.3);
@@ -99,25 +106,62 @@ html{
         transform: (1);
     }
 }
- 
-
+.row{ 
+    width: 80%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    text-align: left; 
+    height: inherit;
+    position: absolute; 
+}
+.text-left-header{
+    width: 100%;
+    font-size: 6rem; 
+    letter-spacing: 2px; 
+    color: rgb(233, 229, 19);
+    line-height: 1.2; 
+    font-family: fantasy; 
+    margin-top: 20rem;
+}
 .text-left{
-    font-size: 3rem;  
+    font-size: 2rem;  
     color: whitesmoke;
     font-stretch: semi-expanded;
-    line-height: 1.2;
-    width: 70%;
+    line-height: 2.5rem;
+    width: 80%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 3rem;
 }
 .jumbotron{
- margin-top: 20px;
+ margin-top: 4rem;
+ display: flex;
+ flex-direction: row;
+ width: 20rem;
+ justify-content: left;
+ text-align: left;
 }
-.btn{
+.btn-1{
     font-size: 24px; 
     text-align: center;
     justify-content: center;
     display: inline-flex;
     align-items: center;
+    background-color: rgb(160, 149, 3);
+    color: white;
+    border-radius: 1rem;
+    padding: 1.2rem;
+    border: none;
+    letter-spacing: 2px;
+}
+.btn-1:hover{
+
+    background-color: rgb(241, 241, 233);
+    color:  rgb(160, 149, 3);;
+    border-radius: 1rem;
+    padding: 1.2rem;
+    border: 1 solid  rgb(160, 149, 3);
 }
 .btn-link{
     margin-top: 23px;
@@ -132,42 +176,51 @@ html{
      border-radius: 0.2cm;
      text-align: center;
 }
-
- 
-
-
+.footer-section{
+    display: flex;
+    flex-direction: column;
+}
 .footer{
-    background-color: rgb(241, 169, 169);
+    background-color: rgb(19, 18, 18);
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-     align-items: center;
-     padding: 0px;
+    justify-content: space-evenly;
+     align-items: center; 
+     width: inherit; 
+     font-weight: bolder;
 }
+ 
 .footer-content{
-        text-align: center;
-        font-weight: 400;
+    text-align: center; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2px;
+    color: bisque;
 }
+
 .copyright{
     padding-top: 5px;
 }
 .social-link{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
+
 }
 .icons{
     padding: 20px;
+    color: white;
+    font-size: 4rem;
 }
-
-
 
 @media(max-width:1500px){
     .img-wrapper{
         height: 90vh;   
     }
-      
 }
 @media (max-width: 576px) { 
     .img-wrapper{
@@ -185,8 +238,7 @@ html{
         font-weight: 80;
         color: whitesmoke;
         font-stretch: semi-expanded;
-        letter-spacing: 1px;
-        line-height: 1.1;
+        letter-spacing: 1px; 
     }
 
     .btn{

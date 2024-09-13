@@ -47,7 +47,7 @@ public function symbol_count($product ,$symbol,$usertype,$conn){
         }
 }
 public function save($product,$symbol,$status,$price,$usertype,$conn){
-    $query="CALL add_product('$product','$usertype','$symbol','$status','$price') ";  
+    $query="CALL sp_add_product('$product','$usertype','$symbol','$status','$price') ";  
     if (mysqli_query($conn, $query)) { 
                 $this->Error_log=null;
     } else {

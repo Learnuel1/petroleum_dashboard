@@ -53,7 +53,7 @@ FROM products p INNER JOIN currentprice c ON p.Proid=c.Proid INNER JOIN business
 DELIMITER //
 CREATE PROCEDURE sp_add_product(IN userid int(11), IN name varchar(50), IN symbol varchar(10),IN pstatus varchar(20),IN price DECIMAL(7,2))
 BEGIN
-	INSERT INTO products(Regid,Name,Symbol,Status) VALUES(userid,name,symbol,pstatus);
+    INSERT INTO products(Regid,Name,Symbol,Status) VALUES(userid,name,symbol,pstatus);
    INSERT INTO price(Proid,Cost) 
    VALUES((SELECT Proid FROM products WHERE Regid=userid AND Name=name ORDER BY Proid DESC LIMIT 1),price);
    INSERT INTO currentprice(Proid,Cost,Date)

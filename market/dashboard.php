@@ -66,7 +66,7 @@ if(!isset($_SESSION["LoggedIn"])){
                             </tr>
                             </thead>
                             <tbody id="all-time-price"> 
-                            <?php 
+                            <!-- <?php 
                                 $userid = $_SESSION["UserType"];
                                 $q1="SELECT * FROM view_product_price WHERE Regid=$userid " ;
                                 $q1 = $conn->query($q1);
@@ -82,7 +82,7 @@ if(!isset($_SESSION["LoggedIn"])){
                                 </tr>
                                 <?php
                                 } 
-                                ?>  
+                                ?>   -->
                           
                            </tbody>
                       </table>
@@ -221,14 +221,13 @@ if(!isset($_SESSION["LoggedIn"])){
    var addProduct_model= document.querySelector("#btn_addProduct_modal");
    var notification= document.querySelector("#notification_model");
    var headContainer= document.querySelector("#header"); 
-   ("#notification_model");
+  //  ("#notification_model");
    var btn_updateprice_model= document.querySelector("#btn_updateprice_model"); 
    addProduct_model.style.display='none';
    notification.style.display='none';   
    btn_updateprice_model.style.display='none'; 
    var error=""; 
-   
-   
+    
    loadproduct();
   var status=$("#status").val(); 
   
@@ -249,6 +248,7 @@ if(!isset($_SESSION["LoggedIn"])){
   });
   
    $("#addProduct").on('click',function(){ 
+     
      $("#btn_addProduct_modal").trigger('click');
    });
 

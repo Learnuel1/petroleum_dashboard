@@ -28,6 +28,7 @@ $db= new Database();
 }
 //register gas station
 if (isset($_POST["register"])){
+   try{
    $businessname=$db->conn->real_escape_string( $_POST["businessname"]);
    $cacnumber=$db->conn->real_escape_string( $_POST["cacnumber"]);
    $email=$db->conn->real_escape_string( $_POST["email"]);
@@ -40,9 +41,10 @@ if (isset($_POST["register"])){
    
    $user = new Userlogin();
    if($user->business_exist($cacnumber,$db->conn)){
-      exit("Business cac number already exist");
-   }else if($user->email_exist($email,$db->conn)) {
-      exit("Email already exist");
+      throw new Exception("Business cac number already exist");
+   }
+    if($user->email_exist($email,$db->conn)) {
+      throw new Exception("Email already exist");
    }
    else{
       $user->register_business($businessname,$cacnumber,strtolower($email),$state,$city,$businesscontact,$address,$password,strtolower($website),$db->conn);
@@ -52,6 +54,9 @@ if (isset($_POST["register"])){
             exit($user->Error_log);
       }
    }
+}catch (Exception $e) {
+   exit($e->getMessage());
+}
     
 }
 //Login user
